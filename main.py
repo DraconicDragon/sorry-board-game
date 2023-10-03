@@ -100,13 +100,20 @@ def print_board(extras=True):
 
     for cell in board:
         print(cell, end=" ")
+        if cell == 0:  # match field numbers
+            print(" ", end="")
     print()
+    for i in range(1, 41):  # print field numbers for users
+        if i < 10:
+            print(i, end="  ")
+        else:
+            print(i, end=" ")
 
     if extras:
         print("\n" + print_extra_fields())
 
 
-# prints pieces in home and finish
+# prints pieces in home and finish; called in print_board()
 def print_extra_fields():
     home = "In home: "
     finish = "In finish: "
