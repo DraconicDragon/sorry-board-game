@@ -94,11 +94,12 @@ def print_board(extras=True):
     for player, player_data in game_data.items():
         for piece in player_data["pieces"]:
             if piece != -1:
-                symbol = player[0].upper()  # Get the player's letter and color it
+                symbol = player[0].upper()  # get the player's letter and color it
+                symbol += str(player_data["pieces"].index(piece) + 1)  # add piece index to symbol
                 board[piece] = color_text(player, symbol)
 
     for cell in board:
-        print(cell, end="")
+        print(cell, end=" ")
     print()
 
     if extras:
