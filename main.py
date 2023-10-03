@@ -259,7 +259,9 @@ def execute_turn():
     # TODO: roll dice should just switch to next player if player did not get 6 and all pieces are in home
     target_piece_field = get_target_field(dice_number)  # returns array [piece_index, target_field]
     print(f"field that the piece wants to go on: {target_piece_field}")
-    move_piece(target_piece_field[0], target_piece_field[1])
+
+    if target_piece_field != None:  # pylint test, temporary
+        move_piece(target_piece_field[0], target_piece_field[1])
     print_board(False)
 
 
