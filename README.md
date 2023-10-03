@@ -1,4 +1,4 @@
-# "Sorry!" board game (GER: Mensch ärgere Dich nicht!)
+# "Sorry!" board game (GER: Mensch ärgere Dich nicht)
 
 made this because i hated my friend's way of coding
 
