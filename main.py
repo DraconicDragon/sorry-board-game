@@ -135,6 +135,7 @@ def print_extra_fields():
 print_board(False)  # True for extra fields
 
 
+# return True if piece is on same field as another piece
 def is_piece_on_same_field(target_field: int) -> bool:
     for pl in game_data.keys():
         for piece_pos in game_data[pl]["pieces"]:
@@ -164,7 +165,6 @@ def select_piece_to_move(player):
 
 
 # gets the field the player wants to move a piece to, does not check for pieces on target field itself
-# TODO: return array of piece 'ID'/index and target field
 def get_target_field(dice_number) -> list[int]:
     has_reroll = False
     piece_in_home = check_pieces_in_home()
@@ -205,7 +205,7 @@ def get_target_field(dice_number) -> list[int]:
         # TODO: piece selection
         pass
 
-    # idk what uh
+    # idk what uh, implement outside of this function maybe or msthing brain not working ok bye
     if has_reroll:
         execute_turn()
 
