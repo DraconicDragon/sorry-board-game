@@ -153,9 +153,9 @@ def kick_piece(other_player, target_field):
 def select_piece_to_move(player):
     while True:
         try:
-            piece_index = int(input(f"Enter the index of the piece you want to move (0-3) for {player}: "))
-            if piece_index < 0 or piece_index > 3:
-                print("Invalid piece index. Please enter a number between 0 and 3.")
+            piece_index = int(input(f"Enter the index of the piece you want to move (1-4) for {player}: "))
+            if piece_index < 1 or piece_index > 4:
+                print("Invalid piece index. Please enter a number between 1 and 4.")
             elif game_data[player]["pieces"][piece_index] == -1:
                 print("This piece is in home. You can only select pieces on the board.")
             else:
