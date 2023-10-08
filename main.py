@@ -30,7 +30,6 @@ game_data = {
         "finish": [0, 0, 0, 0],
     },
 }
-board = [0] * 40
 dice_number = 0
 piece_in_home = 0  # 0 = no pieces in home, 1 = pieces in home, 2 = full home
 # NOTE: possibly change piece_in_home to TRUE/FALSE maybe where TRUE can be both full home and partially full
@@ -266,4 +265,3 @@ def execute_turn():
 
 execute_turn()
 # create function placeholder for changing turn to next player
-
