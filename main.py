@@ -90,6 +90,7 @@ def color_text(player, text):
 
 # print the board + extra fields
 def print_board(extras=True):
+    board = [0] * 40
     # replace 0 with player's letter and color it
     for player, player_data in game_data.items():
         for piece in player_data["pieces"]:
@@ -150,21 +151,21 @@ def kick_piece(other_player, target_field):
     print(f"Kicked {other_player}'s piece from field {target_field}.")
 
 
-def select_piece_to_move(player):
+def select_piece_to_move():
     while True:
         try:
             piece_index = int(input(f"Enter the index of the piece you want to move (1-4) for {player}: "))
             if piece_index < 1 or piece_index > 4:
                 print("Invalid piece index. Please enter a number between 1 and 4.")
-            elif game_data[player]["pieces"][piece_index] == -1:
+            elif game_data[player]["pieces"][piece_index - 1] == -1:
                 print("This piece is in home. You can only select pieces on the board.")
             else:
-                return piece_index
+                return piece_index - 1
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
 
-# gets the field the player wants to move a piece to, does not check for pieces on target field itself
+# gets the field the player wants to move a piece to; returns array [piece_index, target_field]
 def get_target_field(dice_number) -> list[int]:
     has_reroll = False
     piece_in_home = check_pieces_in_home()
@@ -187,23 +188,19 @@ def get_target_field(dice_number) -> list[int]:
                     target_piece = game_data[player]["pieces"].index(-1)
                     return [target_piece, game_data[player]["start_field"]]
 
-                    # for piece in game_data[player]["pieces"]:
-                    #     if piece == -1:
-                    #         target_piece = piece
-                    return [target_piece, game_data[player]["start_field"]]
-
                 elif choice.lower() == "b":
-                    # TODO: piece selection
-                    pass
+                    target_piece = select_piece_to_move()
+                    return [target_piece, game_data[player]["pieces"][target_piece] + dice_number]
+
                 else:
                     print("Invalid choice. Please enter 'h' or 'b'.")
         else:
-            # TODO: piece selection
-            pass
+            target_piece = select_piece_to_move()
+            return [target_piece, game_data[player]["pieces"][target_piece] + dice_number]
 
     else:
-        # TODO: piece selection
-        pass
+        target_piece = select_piece_to_move()
+        return [target_piece, game_data[player]["pieces"][target_piece] + dice_number]
 
     # idk what uh, implement outside of this function maybe or msthing brain not working ok bye
     if has_reroll:
@@ -215,7 +212,7 @@ def check_pieces_in_home():  # returns 0 | 1 | 2
         print("Player has only -1 values in home. Must move pieces in home. retries FULL since full home")
         return 2
     elif -1 in game_data[player]["pieces"]:
-        print("Player has piece(s) in home. Can choose which piece to move. retries 0, single roll")
+        print("Player has piece(s) in home. Can choose which piece to move IF rolled 6. retries 0, single roll")
         return 1
     else:
         print("Player has no pieces in home. Must move pieces on board. retries 0, single roll")
@@ -240,6 +237,7 @@ def roll_dice():
 print(f"\n{player}'s turn:")
 
 
+# BUG: target_piece value is wrong, its the value of the piece index, not the piece itself
 def move_piece(target_piece, target_field):
     if is_piece_on_same_field(target_field):
         print("Target field occupied by one or more pieces.")
@@ -262,7 +260,10 @@ def execute_turn():
 
     if target_piece_field != None:  # pylint test, temporary
         move_piece(target_piece_field[0], target_piece_field[1])
-    print_board(False)
+    print_board(True)
+    print(game_data[player]["pieces"])
 
 
 execute_turn()
+# create function placeholder for changing turn to next player
+
